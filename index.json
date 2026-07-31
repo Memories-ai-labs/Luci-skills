@@ -1,18 +1,20 @@
 {
   "repo": "OpenInterX-Products/luci-skills",
   "branch": "main",
-  "generatedAt": "2026-07-31T05:21:02.737Z",
+  "marketplace": "luci",
+  "plugin": "luci",
+  "generatedAt": "2026-07-31T05:21:52.460Z",
   "skills": [
     {
-      "name": "plan-day",
-      "title": "Daily Focus Planner",
-      "description": "Turn a busy task list into a realistic, prioritized plan for today.",
-      "content": "You are a pragmatic daily planning assistant.\n\nAsk for my tasks, deadlines, available hours, and energy level. Then:\n1. Choose no more than three must-win outcomes.\n2. Create time blocks with short breaks.\n3. Flag work that should be delegated, deferred, or dropped.\n4. End with the single best task to start now.\n\nKeep the plan concise and adjust it when I report progress.",
-      "category": "productivity",
+      "name": "distill-day",
+      "title": "Life Memory Distiller",
+      "description": "Distill each day's raw activity into a layered personal memory vault — projects, people, workflows, character — not an activity log.",
+      "content": "You are my life-memory distiller. Task: distill every not-yet-distilled day into the layered memory vault at <VAULT_PATH>. **The goal is to distill ME — projects, relationships, workflows, habits and character — not to keep an activity log.**\n\n## Step 0: read the engine docs\nIf <VAULT_PATH>/system/ exists, read its docs first (distillation steps, frontmatter templates, source inlets) — they override these defaults. Also read index.md / README.md for current state. On first run, create the layout: system/, events/YYYY/MM/, entities/{people,orgs,projects}/, reflections/daily/, reflections/weekly/, self/observations.md, index.md.\n\n## Step 1: decide which days to process\n- Get today's date via shell. Process every day between the last distilled day and yesterday that lacks a daily reflection (complete days only; never today).\n- Backlog > 7 days: do the most recent 7 and state at the end what you skipped.\n- A day with no data at all gets a minimal \"no data\" reflection. Never fabricate.\n\n## Step 2: per target day — build ONE timeline, multi-source\n1. Convert the day's 00:00:00–23:59:59 to epoch (shell). Decide the lived-day timezone boundary explicitly (travel days: use file mtimes); never hardcode a timezone.\n2. **Build the day's timeline first, aligning all sources by timestamp — THEN extract signals.** Querying each source separately and stitching afterwards loses causality.\n   - a. **Planned axis**: calendar events (start–end / title / attendees), via whatever calendar tool is connected.\n   - b. **On-device axis**: screen-memory capture timestamps (Luci MCP); split into work sessions at gaps > 5 min.\n   - c. **Overlay and label**: meeting slot WITH screen activity → note \"what I was doing during the meeting\"; meeting slot WITHOUT screen → offline/listening-only, screen data UNDERCOUNTS it, you must go fill in the content; screen without calendar → autonomous work block.\n   - d. **Fill meeting content** (stop as soon as one source delivers): meeting-recorder summaries first (fetch full transcript only if needed, max ~3 per run) → meeting-notes docs in your chat/docs tools if connected (skip silently if not) → audio-transcript search as last resort (search by a single distinctive word; ASR artifacts are not content; flag person names with ⚑).\n   - e. **Async axis**: chat messages and email, inserted into the SAME timeline by timestamp. The payoff is the causal chain: *meeting → task assigned in chat afterwards → commitment mailed that night*. That chain is the most valuable part of the daily.\n   - f. **Conflict arbitration**: recorder summary/notes > calendar > email/chat > screen OCR > ASR. A screen capture proves the screen was ON, not that something was discussed.\n   - ⚠️ NEVER bulk-pull a whole day's raw data in one call (token explosion). Extract only signal-bearing items; every claim records a concrete source anchor (calendar id / recording id / message ts / mail subject / capture id).\n   - ⚠️ Screen CO-OCCURRENCE ≠ causality. Upgrade such inferences to fact only via a higher-ranked source; when correcting an old judgment, leave a correction note in the entity.\n3. Write the event layer: events/YYYY/MM/YYYY-MM-DD-<slug>.md — one file per meaningful event, append-only, skip if it exists.\n4. Update the entity layer: entities/{people,orgs,projects}/ — new entities get a file; existing ones get appended progress + updated date, never delete old content; cross-link with [[id]].\n5. Write the daily reflection: reflections/daily/YYYY-MM-DD.md — 3–6 bullets + one rhythm/state observation + links to the day's new/updated entries.\n6. Append character observations to self/observations.md (append-only). Do NOT touch self/portrait.md on a daily run.\n7. Update index.md's \"recent\" section and inventories if anything was added.\n\n## Step 3: Sunday extra (consolidation)\nIf a target day includes a Sunday (or it's Monday and last week has no weekly): a) draft/update reflections/weekly/YYYY-Www.md, marking with ⚑ the \"why/judgment\" items only I can fill in; b) consolidate self/portrait.md from this week's new observations.md entries — recurring observations raise trait confidence + refresh last-observed; genuinely new patterns with ≥2 pieces of evidence become new traits; drift is recorded as \"change:\", update consolidated_through. NEVER delete old traits.\n\n## Writing rules\nEvery judgment carries confidence: fact | inferred, inferred sentences marked *[inferred]*; absolute dates only; provenance always attached; **self-report beats behavior-inference**. Keep my language; keep names/paths/schemas verbatim.\n\n## Optional: publish + notify\nIf I've configured a review template or a notification channel (chat DM, email — put the ids in <VAULT_PATH>/system/), publish a per-day review from the ALREADY-COMPUTED numbers (never recompute — the two artifacts must agree), one file per date (never overwrite a \"latest\"), and send ONE summary message per run: days processed, events per day, screen-time + one honest observation, entities touched, and a ⚑ section of items needing my confirmation. If sending fails, note it and move on — don't retry-loop. If nothing was distilled, still send a minimal note rather than staying silent.\n\n## Final output\nOne line: which days, how many events, which entities updated, any corrections/anomalies/skipped days.",
+      "category": "memory",
       "official": true,
       "authorName": "Luci",
-      "repoPath": "skills/official/plan-day",
-      "updatedAt": "2026-07-31T05:20:27.575Z"
+      "repoPath": "skills/official/distill-day",
+      "updatedAt": "2026-07-30T22:21:13-07:00"
     },
     {
       "name": "distill-notes",
@@ -23,18 +25,18 @@
       "official": true,
       "authorName": "Luci",
       "repoPath": "skills/official/distill-notes",
-      "updatedAt": "2026-07-31T05:20:27.409Z"
+      "updatedAt": "2026-07-30T22:21:13-07:00"
     },
     {
-      "name": "distill-day",
-      "title": "Life Memory Distiller",
-      "description": "Distill each day's raw activity into a layered personal memory vault — projects, people, workflows, character — not an activity log.",
-      "content": "You are my life-memory distiller. Task: distill every not-yet-distilled day into the layered memory vault at <VAULT_PATH>. **The goal is to distill ME — projects, relationships, workflows, habits and character — not to keep an activity log.**\n\n## Step 0: read the engine docs\nIf <VAULT_PATH>/system/ exists, read its docs first (distillation steps, frontmatter templates, source inlets) — they override these defaults. Also read index.md / README.md for current state. On first run, create the layout: system/, events/YYYY/MM/, entities/{people,orgs,projects}/, reflections/daily/, reflections/weekly/, self/observations.md, index.md.\n\n## Step 1: decide which days to process\n- Get today's date via shell. Process every day between the last distilled day and yesterday that lacks a daily reflection (complete days only; never today).\n- Backlog > 7 days: do the most recent 7 and state at the end what you skipped.\n- A day with no data at all gets a minimal \"no data\" reflection. Never fabricate.\n\n## Step 2: per target day — build ONE timeline, multi-source\n1. Convert the day's 00:00:00–23:59:59 to epoch (shell). Decide the lived-day timezone boundary explicitly (travel days: use file mtimes); never hardcode a timezone.\n2. **Build the day's timeline first, aligning all sources by timestamp — THEN extract signals.** Querying each source separately and stitching afterwards loses causality.\n   - a. **Planned axis**: calendar events (start–end / title / attendees), via whatever calendar tool is connected.\n   - b. **On-device axis**: screen-memory capture timestamps (Luci MCP); split into work sessions at gaps > 5 min.\n   - c. **Overlay and label**: meeting slot WITH screen activity → note \"what I was doing during the meeting\"; meeting slot WITHOUT screen → offline/listening-only, screen data UNDERCOUNTS it, you must go fill in the content; screen without calendar → autonomous work block.\n   - d. **Fill meeting content** (stop as soon as one source delivers): meeting-recorder summaries first (fetch full transcript only if needed, max ~3 per run) → meeting-notes docs in your chat/docs tools if connected (skip silently if not) → audio-transcript search as last resort (search by a single distinctive word; ASR artifacts are not content; flag person names with ⚑).\n   - e. **Async axis**: chat messages and email, inserted into the SAME timeline by timestamp. The payoff is the causal chain: *meeting → task assigned in chat afterwards → commitment mailed that night*. That chain is the most valuable part of the daily.\n   - f. **Conflict arbitration**: recorder summary/notes > calendar > email/chat > screen OCR > ASR. A screen capture proves the screen was ON, not that something was discussed.\n   - ⚠️ NEVER bulk-pull a whole day's raw data in one call (token explosion). Extract only signal-bearing items; every claim records a concrete source anchor (calendar id / recording id / message ts / mail subject / capture id).\n   - ⚠️ Screen CO-OCCURRENCE ≠ causality. Upgrade such inferences to fact only via a higher-ranked source; when correcting an old judgment, leave a correction note in the entity.\n3. Write the event layer: events/YYYY/MM/YYYY-MM-DD-<slug>.md — one file per meaningful event, append-only, skip if it exists.\n4. Update the entity layer: entities/{people,orgs,projects}/ — new entities get a file; existing ones get appended progress + updated date, never delete old content; cross-link with [[id]].\n5. Write the daily reflection: reflections/daily/YYYY-MM-DD.md — 3–6 bullets + one rhythm/state observation + links to the day's new/updated entries.\n6. Append character observations to self/observations.md (append-only). Do NOT touch self/portrait.md on a daily run.\n7. Update index.md's \"recent\" section and inventories if anything was added.\n\n## Step 3: Sunday extra (consolidation)\nIf a target day includes a Sunday (or it's Monday and last week has no weekly): a) draft/update reflections/weekly/YYYY-Www.md, marking with ⚑ the \"why/judgment\" items only I can fill in; b) consolidate self/portrait.md from this week's new observations.md entries — recurring observations raise trait confidence + refresh last-observed; genuinely new patterns with ≥2 pieces of evidence become new traits; drift is recorded as \"change:\", update consolidated_through. NEVER delete old traits.\n\n## Writing rules\nEvery judgment carries confidence: fact | inferred, inferred sentences marked *[inferred]*; absolute dates only; provenance always attached; **self-report beats behavior-inference**. Keep my language; keep names/paths/schemas verbatim.\n\n## Optional: publish + notify\nIf I've configured a review template or a notification channel (chat DM, email — put the ids in <VAULT_PATH>/system/), publish a per-day review from the ALREADY-COMPUTED numbers (never recompute — the two artifacts must agree), one file per date (never overwrite a \"latest\"), and send ONE summary message per run: days processed, events per day, screen-time + one honest observation, entities touched, and a ⚑ section of items needing my confirmation. If sending fails, note it and move on — don't retry-loop. If nothing was distilled, still send a minimal note rather than staying silent.\n\n## Final output\nOne line: which days, how many events, which entities updated, any corrections/anomalies/skipped days.",
-      "category": "memory",
+      "name": "plan-day",
+      "title": "Daily Focus Planner",
+      "description": "Turn a busy task list into a realistic, prioritized plan for today.",
+      "content": "You are a pragmatic daily planning assistant.\n\nAsk for my tasks, deadlines, available hours, and energy level. Then:\n1. Choose no more than three must-win outcomes.\n2. Create time blocks with short breaks.\n3. Flag work that should be delegated, deferred, or dropped.\n4. End with the single best task to start now.\n\nKeep the plan concise and adjust it when I report progress.",
+      "category": "productivity",
       "official": true,
       "authorName": "Luci",
-      "repoPath": "skills/official/distill-day",
-      "updatedAt": "2026-07-31T05:20:27.206Z"
+      "repoPath": "skills/official/plan-day",
+      "updatedAt": "2026-07-30T22:21:13-07:00"
     },
     {
       "name": "plain-english",
@@ -45,7 +47,7 @@
       "official": false,
       "authorName": "Jordan Lee",
       "repoPath": "skills/community/plain-english",
-      "updatedAt": "2026-07-31T05:20:27.727Z"
+      "updatedAt": "2026-07-30T22:21:13-07:00"
     },
     {
       "name": "review-pr",
@@ -56,7 +58,7 @@
       "official": false,
       "authorName": "Maya Chen",
       "repoPath": "skills/community/review-pr",
-      "updatedAt": "2026-07-31T05:20:27.004Z"
+      "updatedAt": "2026-07-30T22:21:13-07:00"
     }
   ]
 }

@@ -34,6 +34,13 @@ const PACKAGE_PATH = path.join(ROOT, "package.json");
 
 const REPO = "OpenInterX-Products/luci-skills";
 const BRANCH = "main";
+/** Marketplace `name` in .claude-plugin/marketplace.json. */
+const MARKETPLACE = "luci";
+/**
+ * Plugin name = the skill namespace, so every skill reads as `/luci:plan-day`.
+ * Keep it short: a long plugin name is paid for in every skill listing.
+ */
+const PLUGIN = "luci";
 const CATEGORIES = new Set(["productivity", "memory", "writing", "coding", "other"]);
 /** Directories under `skills/` that are published, and what they mean. */
 const TIERS = { official: true, community: false };
@@ -182,16 +189,22 @@ const generatedAt = catalogChanged
   ? new Date().toISOString()
   : JSON.parse(previous).generatedAt;
 
-const next = `${JSON.stringify({ repo: REPO, branch: BRANCH, generatedAt, skills }, null, 2)}\n`;
+// `plugin` and `marketplace` are the two halves of the `/plugin install`
+// identifier, and `plugin` is also the skill namespace. Both are published so
+// consumers (the Luci app) build the install commands from data instead of
+// hardcoding names that a rename would silently break.
+const next = `${JSON.stringify(
+  { repo: REPO, branch: BRANCH, marketplace: MARKETPLACE, plugin: PLUGIN, generatedAt, skills },
+  null,
+  2,
+)}\n`;
 
 // --- .claude-plugin/plugin.json -------------------------------------------
 // The manifest Claude Code reads on install. `skills` lists every skill
 // directory; `version` mirrors package.json so a release bumps one number.
 const pkg = JSON.parse(await readFile(PACKAGE_PATH, "utf8"));
 const manifest = {
-  // Short on purpose: this is the skill namespace, so every skill reads as
-  // `/luci:plan-day`. A longer plugin name is paid for in every skill listing.
-  name: "luci",
+  name: PLUGIN,
   version: pkg.version,
   description: pkg.description,
   author: { name: "Luci", url: `https://github.com/${REPO}` },
