@@ -31,7 +31,7 @@ Or, from inside a session:
 /reload-plugins
 ```
 
-Skills are namespaced by the plugin: `/luci:plan-day`.
+Skills are namespaced by the plugin: `/luci:distill-day`.
 
 The `marketplace add` line is one-time. It is needed because this marketplace is
 self-hosted; plugins in Claude Code's official marketplace skip it.
@@ -42,18 +42,11 @@ self-hosted; plugins in Claude Code's official marketplace skip it.
 <summary><strong>Codex, and other agents</strong></summary>
 
 ```bash
-npx skills add OpenInterX-Products/luci-skills
+npx skills add OpenInterX-Products/luci-skills --skill distill-day
 ```
 
-Pick the skills you want, and which coding agents to install them on. Or take exactly
-one:
-
-```bash
-npx skills add OpenInterX-Products/luci-skills --skill plan-day
-```
-
-Files land in your repo as ordinary files you own and can edit. Pull later changes with
-`npx skills update`.
+Pick which coding agents to install it on. Files land in your repo as ordinary files
+you own and can edit. Pull later changes with `npx skills update`.
 
 </details>
 
@@ -61,21 +54,19 @@ Files land in your repo as ordinary files you own and can edit. Pull later chang
 <summary><strong>Or ask your agent</strong></summary>
 
 ```
-Install this agent skill for me: https://github.com/OpenInterX-Products/luci-skills/tree/main/skills/official/plan-day
+Install this agent skill for me: https://github.com/OpenInterX-Products/luci-skills/tree/main/skills/official/distill-day
 ```
 
 </details>
 
-### 2. Set up `distill-day` (only if you use it)
+### 2. Set up the vault
 
 1. Luci installed with Screen Memory on — the skill reads capture timestamps over
    Luci's MCP server.
 2. Replace the `<VAULT_PATH>` placeholder in the prompt with a real directory, or give
    the agent the path when it asks. It creates the layout on first run.
 
-The other four skills need no setup.
-
-## Why These Skills Exist
+## Why This Exists
 
 <!-- TODO: yours. Matt's format, repeated per problem:
        ### #1: <the failure mode, in the user's words>
@@ -90,20 +81,9 @@ The other four skills need no setup.
 <!-- Descriptions below are the frontmatter `description` of each skill — edit them in
      the SKILL.md, not here. -->
 
-### Official
-
 | Skill | Description |
 | --- | --- |
-| [`/luci:plan-day`](./skills/official/plan-day/SKILL.md) | Turn a busy task list into a realistic, prioritized plan for today. |
-| [`/luci:distill-notes`](./skills/official/distill-notes/SKILL.md) | Extract durable facts, decisions, and follow-ups from raw notes. |
-| [`/luci:distill-day`](./skills/official/distill-day/SKILL.md) | Distill each day's raw activity into a layered personal memory vault. Needs Luci. |
-
-### Community
-
-| Skill | Description | Author |
-| --- | --- | --- |
-| [`/luci:review-pr`](./skills/community/review-pr/SKILL.md) | Review a code change for correctness, risk, and maintainability. | Maya Chen |
-| [`/luci:plain-english`](./skills/community/plain-english/SKILL.md) | Make dense writing clear and direct without losing its meaning. | Jordan Lee |
+| [`/luci:distill-day`](./skills/official/distill-day/SKILL.md) | Distill each day's raw activity into a layered personal memory vault. |
 
 ## Manage
 
@@ -132,11 +112,11 @@ One directory per skill, one `SKILL.md` inside it:
 
 ```markdown
 ---
-name: plan-day                   # kebab-case, must equal the directory name; keep it SHORT
-                                 # — it is the skill namespace: /luci:plan-day
-description: Turn a busy task list into a realistic plan. Use when the user asks to plan a day.
-category: productivity           # productivity | memory | writing | coding | other
-title: Daily Focus Planner       # optional display name; where the long, readable name goes
+name: review-pr                  # kebab-case, must equal the directory name; keep it SHORT
+                                 # — it is the skill namespace: /luci:review-pr
+description: Review a code change for risk and correctness. Use when asked to review a PR.
+category: coding                 # productivity | memory | writing | coding | other
+title: Pull Request Reviewer     # optional display name; where the long, readable name goes
 author: Your Name                # required for community skills
 ---
 

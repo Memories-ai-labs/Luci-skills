@@ -4,7 +4,7 @@
   "marketplace": "luci",
   "installName": "luci-skills",
   "plugin": "luci",
-  "generatedAt": "2026-07-31T05:21:52.460Z",
+  "generatedAt": "2026-07-31T06:05:37.023Z",
   "skills": [
     {
       "name": "distill-day",
@@ -15,50 +15,6 @@
       "official": true,
       "authorName": "Luci",
       "repoPath": "skills/official/distill-day",
-      "updatedAt": "2026-07-30T22:21:13-07:00"
-    },
-    {
-      "name": "distill-notes",
-      "title": "Memory Distiller",
-      "description": "Extract durable facts, decisions, and follow-ups from raw notes.",
-      "content": "Review the notes I provide and extract only information worth remembering.\n\nReturn:\n- Durable facts\n- Decisions and their rationale\n- People and preferences\n- Open questions\n- Follow-up actions with owners, when known\n\nDo not invent missing context. Mark uncertain details explicitly.",
-      "category": "memory",
-      "official": true,
-      "authorName": "Luci",
-      "repoPath": "skills/official/distill-notes",
-      "updatedAt": "2026-07-30T22:21:13-07:00"
-    },
-    {
-      "name": "plan-day",
-      "title": "Daily Focus Planner",
-      "description": "Turn a busy task list into a realistic, prioritized plan for today.",
-      "content": "You are a pragmatic daily planning assistant.\n\nAsk for my tasks, deadlines, available hours, and energy level. Then:\n1. Choose no more than three must-win outcomes.\n2. Create time blocks with short breaks.\n3. Flag work that should be delegated, deferred, or dropped.\n4. End with the single best task to start now.\n\nKeep the plan concise and adjust it when I report progress.",
-      "category": "productivity",
-      "official": true,
-      "authorName": "Luci",
-      "repoPath": "skills/official/plan-day",
-      "updatedAt": "2026-07-30T22:21:13-07:00"
-    },
-    {
-      "name": "plain-english",
-      "title": "Plain Language Editor",
-      "description": "Make dense writing clear and direct without losing its meaning.",
-      "content": "Edit the text I provide for clarity.\n\nPreserve the author's meaning and voice while shortening long sentences,\nremoving jargon, and making abstract claims concrete. Return the revised text\nfirst, followed by a short list of the most important edits. Ask before making\nchanges that would alter the argument.",
-      "category": "writing",
-      "official": false,
-      "authorName": "Jordan Lee",
-      "repoPath": "skills/community/plain-english",
-      "updatedAt": "2026-07-30T22:21:13-07:00"
-    },
-    {
-      "name": "review-pr",
-      "title": "Pull Request Reviewer",
-      "description": "Review a code change for correctness, risk, and maintainability.",
-      "content": "Act as a senior engineer reviewing a pull request.\n\nStart by stating what the change does. Inspect correctness, edge cases, security,\nperformance, tests, and maintainability. Prioritize findings by impact and cite\nthe relevant file or code when possible. Do not report speculative issues as\nfacts. Finish with a clear approve / request changes recommendation.",
-      "category": "coding",
-      "official": false,
-      "authorName": "Maya Chen",
-      "repoPath": "skills/community/review-pr",
       "updatedAt": "2026-07-30T22:21:13-07:00"
     }
   ]

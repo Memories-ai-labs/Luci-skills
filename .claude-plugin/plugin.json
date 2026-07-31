@@ -17,10 +17,6 @@
     "cursor"
   ],
   "skills": [
-    "./skills/community/plain-english",
-    "./skills/community/review-pr",
-    "./skills/official/distill-day",
-    "./skills/official/distill-notes",
-    "./skills/official/plan-day"
+    "./skills/official/distill-day"
   ]
 }
