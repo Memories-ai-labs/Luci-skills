@@ -1,5 +1,5 @@
 ---
-name: memory-distiller
+name: distill-notes
 description: Extract durable facts, decisions, and follow-ups from raw notes.
 category: memory
 title: Memory Distiller

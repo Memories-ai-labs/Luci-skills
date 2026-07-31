@@ -1,5 +1,5 @@
 ---
-name: daily-focus-planner
+name: plan-day
 description: Turn a busy task list into a realistic, prioritized plan for today.
 category: productivity
 title: Daily Focus Planner

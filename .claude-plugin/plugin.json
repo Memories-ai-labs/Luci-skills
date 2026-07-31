@@ -1,5 +1,5 @@
 {
-  "name": "luci-skills",
+  "name": "luci",
   "version": "0.1.0",
   "description": "Official and community-reviewed agent skills for Luci.",
   "author": {
@@ -17,10 +17,10 @@
     "cursor"
   ],
   "skills": [
-    "./skills/community/plain-language-editor",
-    "./skills/community/pull-request-reviewer",
-    "./skills/official/daily-focus-planner",
-    "./skills/official/life-memory-distiller",
-    "./skills/official/memory-distiller"
+    "./skills/community/plain-english",
+    "./skills/community/review-pr",
+    "./skills/official/distill-day",
+    "./skills/official/distill-notes",
+    "./skills/official/plan-day"
   ]
 }

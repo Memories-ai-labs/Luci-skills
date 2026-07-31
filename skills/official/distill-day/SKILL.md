@@ -1,5 +1,5 @@
 ---
-name: life-memory-distiller
+name: distill-day
 description: Distill each day's raw activity into a layered personal memory vault — projects, people, workflows, character — not an activity log.
 category: memory
 title: Life Memory Distiller

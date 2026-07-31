@@ -189,7 +189,9 @@ const next = `${JSON.stringify({ repo: REPO, branch: BRANCH, generatedAt, skills
 // directory; `version` mirrors package.json so a release bumps one number.
 const pkg = JSON.parse(await readFile(PACKAGE_PATH, "utf8"));
 const manifest = {
-  name: "luci-skills",
+  // Short on purpose: this is the skill namespace, so every skill reads as
+  // `/luci:plan-day`. A longer plugin name is paid for in every skill listing.
+  name: "luci",
   version: pkg.version,
   description: pkg.description,
   author: { name: "Luci", url: `https://github.com/${REPO}` },

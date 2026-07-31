@@ -1,5 +1,5 @@
 ---
-name: plain-language-editor
+name: plain-english
 description: Make dense writing clear and direct without losing its meaning.
 category: writing
 title: Plain Language Editor

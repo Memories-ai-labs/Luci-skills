@@ -1,5 +1,5 @@
 ---
-name: pull-request-reviewer
+name: review-pr
 description: Review a code change for correctness, risk, and maintainability.
 category: coding
 title: Pull Request Reviewer

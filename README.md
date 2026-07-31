@@ -16,13 +16,14 @@ adding it lets Claude Code see what's here, installing is a separate step.
 
 ```
 /plugin marketplace add OpenInterX-Products/luci-skills
-/plugin install luci-skills@luci
+/plugin install luci@luci
 ```
 
-Then `/reload-plugins`. The skills show up namespaced, e.g.
-`/luci-skills:daily-focus-planner`.
+Then `/reload-plugins`. The skills show up namespaced under the plugin name, e.g.
+`/luci:plan-day`.
 
-`luci` is the marketplace name and `luci-skills` the plugin name — both come from
+In `luci@luci`, the first `luci` is the plugin name and the second the marketplace
+name — both come from
 [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json), not from the
 repo name. If you added the marketplace before a skill was published, run
 `/plugin marketplace update luci` first.
@@ -31,24 +32,24 @@ repo name. If you added the marketplace before a skill was published, run
 the right folder for you):
 
 ```
-npx skills add OpenInterX-Products/luci-skills --skill daily-focus-planner
+npx skills add OpenInterX-Products/luci-skills --skill plan-day
 ```
 
 **Or just ask your agent**, pasting the skill's directory URL:
 
 ```
-Install this agent skill for me: https://github.com/OpenInterX-Products/luci-skills/tree/main/skills/official/daily-focus-planner
+Install this agent skill for me: https://github.com/OpenInterX-Products/luci-skills/tree/main/skills/official/plan-day
 ```
 
 ## What's here
 
 | Skill | Tier | What it does |
 | --- | --- | --- |
-| [daily-focus-planner](skills/official/daily-focus-planner) | official | Turns a task list into a realistic plan for today. |
-| [memory-distiller](skills/official/memory-distiller) | official | Pulls durable facts, decisions and follow-ups out of raw notes. |
-| [life-memory-distiller](skills/official/life-memory-distiller) | official | Distills each day into a layered personal memory vault. Uses Luci's local screen memory over MCP. |
-| [pull-request-reviewer](skills/community/pull-request-reviewer) | community | Reviews a change for correctness, risk and maintainability. |
-| [plain-language-editor](skills/community/plain-language-editor) | community | Makes dense writing clear without losing meaning. |
+| [`/luci:plan-day`](skills/official/plan-day) | official | Turns a task list into a realistic plan for today. |
+| [`/luci:distill-notes`](skills/official/distill-notes) | official | Pulls durable facts, decisions and follow-ups out of raw notes. |
+| [`/luci:distill-day`](skills/official/distill-day) | official | Distills each day into a layered personal memory vault. Uses Luci's local screen memory over MCP. |
+| [`/luci:review-pr`](skills/community/review-pr) | community | Reviews a change for correctness, risk and maintainability. |
+| [`/luci:plain-english`](skills/community/plain-english) | community | Makes dense writing clear without losing meaning. |
 
 ## Contributing
 
@@ -62,10 +63,11 @@ One directory per skill, one `SKILL.md` inside it:
 
 ```markdown
 ---
-name: daily-focus-planner        # kebab-case, must equal the directory name
+name: plan-day                   # kebab-case, must equal the directory name; keep it SHORT
+                                 # — it is the skill namespace: /luci:plan-day
 description: Turn a busy task list into a realistic plan. Use when the user asks to plan a day.
 category: productivity           # productivity | memory | writing | coding | other
-title: Daily Focus Planner       # optional; derived from `name` if absent
+title: Daily Focus Planner       # optional display name; where the long, readable name goes
 author: Your Name                # required for community skills
 ---
 
