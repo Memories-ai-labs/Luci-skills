@@ -29,23 +29,6 @@ Or, from inside a session:
 /reload-plugins
 ```
 
-Skills are namespaced by the plugin: `/luci:distill`.
-
-The `marketplace add` line is one-time. It is needed because this marketplace is
-self-hosted; plugins in Claude Code's official marketplace skip it.
-
-**Recommended: turn on auto-update.** Self-hosted marketplaces don't auto-update by
-default. Enable it once — `/plugin` → **Marketplaces** → **luci** → **Enable
-auto-update** — and every push to this repo reaches you automatically (no version
-bumps needed on our side; the plugin is unversioned so each commit counts as a new
-release). Without it, update manually:
-
-```
-/plugin marketplace update luci
-/plugin update luci-skills@luci
-/reload-plugins
-```
-
 </details>
 
 <details>
