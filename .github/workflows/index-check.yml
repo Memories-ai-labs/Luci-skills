@@ -1,0 +1,22 @@
+name: index
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # build-index reads `git log` for each skill's updatedAt, so the full
+          # history has to be present or every timestamp comes back empty.
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # Fails when a skill changed but index.json was not regenerated — the app
+      # ships index.json, so a stale one silently ships stale skills.
+      - run: node scripts/build-index.mjs --check

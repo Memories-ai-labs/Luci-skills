@@ -1,0 +1,17 @@
+{
+  "name": "luci",
+  "owner": {
+    "name": "Luci",
+    "url": "https://github.com/OpenInterX-Products/luci-skills"
+  },
+  "description": "Official Luci agent skills — reviewed, plain SKILL.md, no lock-in.",
+  "plugins": [
+    {
+      "name": "luci-skills",
+      "source": "./",
+      "description": "Official Luci skills: daily planning, note distillation, and layered life-memory distillation over Luci's local screen memory.",
+      "category": "productivity",
+      "keywords": ["luci", "memory", "screen-memory", "productivity", "distillation"]
+    }
+  ]
+}
