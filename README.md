@@ -13,8 +13,6 @@
      bundle that updates when we ship; npx skills = editable copies you own. Warn
      against installing both. -->
 
-### 1. Get the skills
-
 <details open>
 <summary><strong>Claude Code</strong></summary>
 
@@ -70,11 +68,6 @@ Install this agent skill for me: https://github.com/OpenInterX-Products/luci-ski
 ```
 
 </details>
-
-### 2. Set up the life file system
-
-With Luci running (Screen Memory on), run `/luci:setup-luci-skills` once in the
-directory where your daily reports should live.
 
 ## Reference
 
