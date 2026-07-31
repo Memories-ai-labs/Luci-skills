@@ -7,7 +7,7 @@
   "description": "Official Luci agent skills — reviewed, plain SKILL.md, no lock-in.",
   "plugins": [
     {
-      "name": "luci",
+      "name": "luci-skills",
       "source": "./",
       "description": "Official Luci skills: daily planning, note distillation, and layered life-memory distillation over Luci's local screen memory.",
       "category": "productivity",

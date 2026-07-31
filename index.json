@@ -2,6 +2,7 @@
   "repo": "OpenInterX-Products/luci-skills",
   "branch": "main",
   "marketplace": "luci",
+  "installName": "luci-skills",
   "plugin": "luci",
   "generatedAt": "2026-07-31T05:21:52.460Z",
   "skills": [

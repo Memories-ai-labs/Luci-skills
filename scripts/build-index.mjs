@@ -37,9 +37,16 @@ const BRANCH = "main";
 /** Marketplace `name` in .claude-plugin/marketplace.json. */
 const MARKETPLACE = "luci";
 /**
- * Plugin name = the skill namespace, so every skill reads as `/luci:plan-day`.
- * Keep it short: a long plugin name is paid for in every skill listing.
+ * TWO names, deliberately different — Claude Code allows it and each one is
+ * optimized for where it is read:
+ *
+ *   • INSTALL_NAME is the marketplace entry's `name`, i.e. what users type:
+ *     `claude plugin install luci-skills`. Branded and searchable.
+ *   • PLUGIN is `plugin.json`'s `name`, i.e. the skill NAMESPACE, so every
+ *     skill reads `/luci:plan-day`. Short, because it is paid for in every
+ *     single skill listing.
  */
+const INSTALL_NAME = "luci-skills";
 const PLUGIN = "luci";
 const CATEGORIES = new Set(["productivity", "memory", "writing", "coding", "other"]);
 /** Directories under `skills/` that are published, and what they mean. */
@@ -194,7 +201,15 @@ const generatedAt = catalogChanged
 // consumers (the Luci app) build the install commands from data instead of
 // hardcoding names that a rename would silently break.
 const next = `${JSON.stringify(
-  { repo: REPO, branch: BRANCH, marketplace: MARKETPLACE, plugin: PLUGIN, generatedAt, skills },
+  {
+    repo: REPO,
+    branch: BRANCH,
+    marketplace: MARKETPLACE,
+    installName: INSTALL_NAME,
+    plugin: PLUGIN,
+    generatedAt,
+    skills,
+  },
   null,
   2,
 )}\n`;
