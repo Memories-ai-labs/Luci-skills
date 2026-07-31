@@ -11,13 +11,24 @@ copy of [`index.json`](index.json) so browsing works offline.
 
 ## Install
 
-**All official skills** (Claude Code):
+**All official skills** (Claude Code) — **two commands**. A marketplace is a catalog:
+adding it lets Claude Code see what's here, installing is a separate step.
 
 ```
 /plugin marketplace add OpenInterX-Products/luci-skills
+/plugin install luci-skills@luci
 ```
 
-**One skill** (Claude Code, Codex, Cursor — the CLI writes it into the right folder):
+Then `/reload-plugins`. The skills show up namespaced, e.g.
+`/luci-skills:daily-focus-planner`.
+
+`luci` is the marketplace name and `luci-skills` the plugin name — both come from
+[`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json), not from the
+repo name. If you added the marketplace before a skill was published, run
+`/plugin marketplace update luci` first.
+
+**One skill** (Claude Code, Codex, Cursor — one command, and the CLI writes it into
+the right folder for you):
 
 ```
 npx skills add OpenInterX-Products/luci-skills --skill daily-focus-planner
