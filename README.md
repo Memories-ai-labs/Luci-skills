@@ -11,22 +11,31 @@ copy of [`index.json`](index.json) so browsing works offline.
 
 ## Install
 
-**All official skills** (Claude Code) — **two commands**. A marketplace is a catalog:
-adding it lets Claude Code see what's here, installing is a separate step.
+**All official skills** (Claude Code). From a terminal:
+
+```bash
+claude plugin marketplace add OpenInterX-Products/luci-skills
+claude plugin install luci
+```
+
+Or from inside a session:
 
 ```
 /plugin marketplace add OpenInterX-Products/luci-skills
-/plugin install luci@luci
+/plugin install luci
+/reload-plugins
 ```
 
-Then `/reload-plugins`. The skills show up namespaced under the plugin name, e.g.
-`/luci:plan-day`.
+Skills then show up namespaced under the plugin name: `/luci:plan-day`.
 
-In `luci@luci`, the first `luci` is the plugin name and the second the marketplace
-name — both come from
-[`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json), not from the
-repo name. If you added the marketplace before a skill was published, run
-`/plugin marketplace update luci` first.
+Why two commands and not one? A marketplace is a *catalog*. Plugins in Claude Code's
+official marketplace need no `add` step because that catalog ships registered; this
+one is self-hosted, so it gets registered once and then never again. `luci` is the
+plugin name from
+[`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json), not the repo
+name. Add `@luci` (`/plugin install luci@luci`) only if another marketplace you've
+added also publishes a `luci`. Already added the marketplace before a skill was
+published? Run `/plugin marketplace update luci` first.
 
 **One skill** (Claude Code, Codex, Cursor — one command, and the CLI writes it into
 the right folder for you):
