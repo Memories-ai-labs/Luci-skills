@@ -31,10 +31,22 @@ Or, from inside a session:
 /reload-plugins
 ```
 
-Skills are namespaced by the plugin: `/luci:distill-day`.
+Skills are namespaced by the plugin: `/luci:distill`.
 
 The `marketplace add` line is one-time. It is needed because this marketplace is
 self-hosted; plugins in Claude Code's official marketplace skip it.
+
+**Recommended: turn on auto-update.** Self-hosted marketplaces don't auto-update by
+default. Enable it once — `/plugin` → **Marketplaces** → **luci** → **Enable
+auto-update** — and every push to this repo reaches you automatically (no version
+bumps needed on our side; the plugin is unversioned so each commit counts as a new
+release). Without it, update manually:
+
+```
+/plugin marketplace update luci
+/plugin update luci-skills@luci
+/reload-plugins
+```
 
 </details>
 
@@ -42,7 +54,7 @@ self-hosted; plugins in Claude Code's official marketplace skip it.
 <summary><strong>Codex, and other agents</strong></summary>
 
 ```bash
-npx skills add OpenInterX-Products/luci-skills --skill distill-day
+npx skills add OpenInterX-Products/luci-skills --skill distill
 ```
 
 Pick which coding agents to install it on. Files land in your repo as ordinary files
@@ -54,17 +66,19 @@ you own and can edit. Pull later changes with `npx skills update`.
 <summary><strong>Or ask your agent</strong></summary>
 
 ```
-Install this agent skill for me: https://github.com/OpenInterX-Products/luci-skills/tree/main/skills/official/distill-day
+Install this agent skill for me: https://github.com/OpenInterX-Products/luci-skills/tree/main/skills/official/distill
 ```
 
 </details>
 
-### 2. Set up the vault
+### 2. Set up the life file system
 
-1. Luci installed with Screen Memory on — the skill reads capture timestamps over
-   Luci's MCP server.
-2. Replace the `<VAULT_PATH>` placeholder in the prompt with a real directory, or give
-   the agent the path when it asks. It creates the layout on first run.
+1. Luci installed with Screen Memory on — `distill` reads screen activity and
+   transcriptions over Luci's MCP server.
+2. In the directory where you want your daily reports and entity files to live, run
+   `/luci:setup-luci-skills` once. It asks about your writing rules, report format,
+   and notification connectors, then records everything in that repo's CLAUDE.md /
+   AGENTS.md. `distill` reads that file on every run.
 
 ## Why This Exists
 
@@ -83,7 +97,8 @@ Install this agent skill for me: https://github.com/OpenInterX-Products/luci-ski
 
 | Skill | Description |
 | --- | --- |
-| [`/luci:distill-day`](./skills/official/distill-day/SKILL.md) | Distill each day's raw activity into a layered personal memory vault. |
+| [`/luci:distill`](./skills/official/distill/SKILL.md) | Distill each day's raw activity into an objective daily report under `reflections/daily/`, and surface new entities for confirmation. |
+| [`/luci:setup-luci-skills`](./skills/official/setup-luci-skills/SKILL.md) | Configure the life file system. Run once before first use of the other luci skills. |
 
 ## Manage
 
@@ -91,7 +106,7 @@ Install this agent skill for me: https://github.com/OpenInterX-Products/luci-ski
 | --- | --- |
 | List installed plugins | `claude plugin list` |
 | Components + token cost | `claude plugin details luci` |
-| Pull the latest skills | `claude plugin marketplace update luci` |
+| Pull the latest skills | `claude plugin marketplace update luci && claude plugin update luci-skills@luci` |
 | Uninstall | `claude plugin uninstall luci-skills` |
 
 Two naming quirks, both verified against the CLI: `install` / `list` / `uninstall` take
@@ -139,10 +154,14 @@ community author present. CI runs `--check` and fails when either generated file
 stale — the Luci app ships `index.json`, so a stale one ships stale skills.
 
 ```bash
-claude plugin validate . --strict
+claude plugin validate .
 ```
 
-Anthropic's review pipeline runs the same validator.
+Anthropic's review pipeline runs the same validator. It warns that `plugin.json` has
+no `version` — that is deliberate, not an oversight: an unversioned git-sourced plugin
+resolves its version from the commit SHA, so every push is update-detectable without
+anyone remembering to bump a number. Don't add a `version` field, and don't use
+`--strict` (it promotes that warning to an error).
 
 ## License
 

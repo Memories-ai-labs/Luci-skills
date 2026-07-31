@@ -6,7 +6,8 @@
  *     installing. Its `skills` array must list every skill directory, so it is
  *     generated rather than hand-maintained (hand-maintained lists drift: the
  *     repo this layout is modelled on ships a path whose directory is gone).
- *     `version` is copied from package.json so there is one version to bump.
+ *     `version` is omitted on purpose — git-sourced plugins then use the commit
+ *     SHA as the version, so every push is update-detectable without a bump.
  *
  *   • `index.json` — the machine-readable catalog. The Luci desktop app pulls it
  *     (via its own `pnpm skills:sync`) and ships the result inside its bundle,
@@ -216,11 +217,14 @@ const next = `${JSON.stringify(
 
 // --- .claude-plugin/plugin.json -------------------------------------------
 // The manifest Claude Code reads on install. `skills` lists every skill
-// directory; `version` mirrors package.json so a release bumps one number.
+// directory. `version` is deliberately OMITTED: for git-sourced plugins,
+// Claude Code then treats every commit as a new version, so users pick up
+// skill changes on plugin update without us bumping a number. A pinned
+// `version` would make updates silently no-op until someone remembers to
+// bump it.
 const pkg = JSON.parse(await readFile(PACKAGE_PATH, "utf8"));
 const manifest = {
   name: PLUGIN,
-  version: pkg.version,
   description: pkg.description,
   author: { name: "Luci", url: `https://github.com/${REPO}` },
   homepage: `https://github.com/${REPO}`,

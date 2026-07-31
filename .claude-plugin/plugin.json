@@ -1,6 +1,5 @@
 {
   "name": "luci",
-  "version": "0.1.0",
   "description": "Official and community-reviewed agent skills for Luci.",
   "author": {
     "name": "Luci",
@@ -17,6 +16,7 @@
     "cursor"
   ],
   "skills": [
-    "./skills/official/distill-day"
+    "./skills/official/distill",
+    "./skills/official/setup-luci-skills"
   ]
 }
