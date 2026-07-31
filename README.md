@@ -73,12 +73,8 @@ Install this agent skill for me: https://github.com/OpenInterX-Products/luci-ski
 
 ### 2. Set up the life file system
 
-1. Luci installed with Screen Memory on — `distill` reads screen activity and
-   transcriptions over Luci's MCP server.
-2. In the directory where you want your daily reports and entity files to live, run
-   `/luci:setup-luci-skills` once. It asks about your writing rules, report format,
-   and notification connectors, then records everything in that repo's CLAUDE.md /
-   AGENTS.md. `distill` reads that file on every run.
+With Luci running (Screen Memory on), run `/luci:setup-luci-skills` once in the
+directory where your daily reports should live.
 
 ## Reference
 
@@ -89,20 +85,6 @@ Install this agent skill for me: https://github.com/OpenInterX-Products/luci-ski
 | --- | --- |
 | [`/luci:distill`](./skills/official/distill/SKILL.md) | Distill each day's raw activity into an objective daily report under `reflections/daily/`, and surface new entities for confirmation. |
 | [`/luci:setup-luci-skills`](./skills/official/setup-luci-skills/SKILL.md) | Configure the life file system. Run once before first use of the other luci skills. |
-
-## Manage
-
-| Goal | Command |
-| --- | --- |
-| List installed plugins | `claude plugin list` |
-| Components + token cost | `claude plugin details luci` |
-| Pull the latest skills | `claude plugin marketplace update luci && claude plugin update luci-skills@luci` |
-| Uninstall | `claude plugin uninstall luci-skills` |
-
-Two naming quirks, both verified against the CLI: `install` / `list` / `uninstall` take
-`luci-skills`, while `claude plugin details` takes `luci` (the namespace name). Add
-`@luci` — `install luci-skills@luci` — only if another marketplace you added also
-publishes a `luci-skills`.
 
 ## License
 

@@ -4,7 +4,7 @@
   "marketplace": "luci",
   "installName": "luci-skills",
   "plugin": "luci",
-  "generatedAt": "2026-07-31T10:08:06.656Z",
+  "generatedAt": "2026-07-31T15:22:01.397Z",
   "skills": [
     {
       "name": "distill",
@@ -15,7 +15,7 @@
       "official": true,
       "authorName": "Luci",
       "repoPath": "skills/official/distill",
-      "updatedAt": "2026-07-31T10:08:00.413Z"
+      "updatedAt": "2026-07-31T03:25:48-07:00"
     },
     {
       "name": "setup-luci-skills",
@@ -26,7 +26,7 @@
       "official": true,
       "authorName": "Luci",
       "repoPath": "skills/official/setup-luci-skills",
-      "updatedAt": "2026-07-31T09:12:22.419Z"
+      "updatedAt": "2026-07-31T03:25:48-07:00"
     }
   ]
 }
