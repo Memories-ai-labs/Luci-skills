@@ -66,7 +66,7 @@ you own and can edit. Pull later changes with `npx skills update`.
 <summary><strong>Or ask your agent</strong></summary>
 
 ```
-Install this agent skill for me: https://github.com/OpenInterX-Products/luci-skills/tree/main/skills/official/distill
+Install this agent skill for me: https://github.com/OpenInterX-Products/luci-skills
 ```
 
 </details>
