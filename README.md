@@ -43,6 +43,10 @@ repeated in front of every skill. Add `@luci`
 publishes a `luci-skills`. Already added the marketplace before a skill was
 published? Run `/plugin marketplace update luci` first.
 
+One CLI inconsistency to know about: `install`, `list` and `uninstall` take
+`luci-skills`, but `claude plugin details` takes the namespace name —
+`claude plugin details luci`. `details luci-skills` reports "not found".
+
 **One skill** (Claude Code, Codex, Cursor — one command, and the CLI writes it into
 the right folder for you):
 
