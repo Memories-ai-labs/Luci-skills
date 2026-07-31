@@ -114,55 +114,6 @@ Two naming quirks, both verified against the CLI: `install` / `list` / `uninstal
 `@luci` — `install luci-skills@luci` — only if another marketplace you added also
 publishes a `luci-skills`.
 
-## Contributing
-
-Submit through **Luci → Skills Market → Submit a skill**. Approved submissions are
-committed here with your name on them. Pull requests welcome — same bar either way.
-
-<!-- TODO (optional): what gets accepted and what does not. -->
-
-### Skill format
-
-One directory per skill, one `SKILL.md` inside it:
-
-```markdown
----
-name: review-pr                  # kebab-case, must equal the directory name; keep it SHORT
-                                 # — it is the skill namespace: /luci:review-pr
-description: Review a code change for risk and correctness. Use when asked to review a PR.
-category: coding                 # productivity | memory | writing | coding | other
-title: Pull Request Reviewer     # optional display name; where the long, readable name goes
-author: Your Name                # required for community skills
----
-
-The prompt itself goes here, as the body.
-```
-
-`description` is the only thing an agent reads when deciding whether to use the skill —
-say when to use it, not just what it is.
-
-### Before you commit
-
-```bash
-node scripts/build-index.mjs
-```
-
-Regenerates [`index.json`](index.json) and
-[`.claude-plugin/plugin.json`](.claude-plugin/plugin.json), and validates every skill:
-kebab-case name matching its directory, non-empty description and body, known category,
-community author present. CI runs `--check` and fails when either generated file is
-stale — the Luci app ships `index.json`, so a stale one ships stale skills.
-
-```bash
-claude plugin validate .
-```
-
-Anthropic's review pipeline runs the same validator. It warns that `plugin.json` has
-no `version` — that is deliberate, not an oversight: an unversioned git-sourced plugin
-resolves its version from the commit SHA, so every push is update-detectable without
-anyone remembering to bump a number. Don't add a `version` field, and don't use
-`--strict` (it promotes that warning to an error).
-
 ## License
 
 MIT — see [LICENSE](LICENSE).
