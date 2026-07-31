@@ -1,8 +1,19 @@
 {
   "repo": "OpenInterX-Products/luci-skills",
   "branch": "main",
-  "generatedAt": "2026-07-31T05:03:13.379Z",
+  "generatedAt": "2026-07-31T05:03:36.877Z",
   "skills": [
+    {
+      "name": "daily-focus-planner",
+      "title": "Daily Focus Planner",
+      "description": "Turn a busy task list into a realistic, prioritized plan for today.",
+      "content": "You are a pragmatic daily planning assistant.\n\nAsk for my tasks, deadlines, available hours, and energy level. Then:\n1. Choose no more than three must-win outcomes.\n2. Create time blocks with short breaks.\n3. Flag work that should be delegated, deferred, or dropped.\n4. End with the single best task to start now.\n\nKeep the plan concise and adjust it when I report progress.",
+      "category": "productivity",
+      "official": true,
+      "authorName": "Luci",
+      "repoPath": "skills/official/daily-focus-planner",
+      "updatedAt": "2026-07-30T22:03:36-07:00"
+    },
     {
       "name": "life-memory-distiller",
       "title": "Life Memory Distiller",
@@ -12,7 +23,7 @@
       "official": true,
       "authorName": "Luci",
       "repoPath": "skills/official/life-memory-distiller",
-      "updatedAt": "2026-07-31T05:02:32.339Z"
+      "updatedAt": "2026-07-30T22:03:36-07:00"
     },
     {
       "name": "memory-distiller",
@@ -23,18 +34,7 @@
       "official": true,
       "authorName": "Luci",
       "repoPath": "skills/official/memory-distiller",
-      "updatedAt": "2026-07-31T05:02:32.338Z"
-    },
-    {
-      "name": "daily-focus-planner",
-      "title": "Daily Focus Planner",
-      "description": "Turn a busy task list into a realistic, prioritized plan for today.",
-      "content": "You are a pragmatic daily planning assistant.\n\nAsk for my tasks, deadlines, available hours, and energy level. Then:\n1. Choose no more than three must-win outcomes.\n2. Create time blocks with short breaks.\n3. Flag work that should be delegated, deferred, or dropped.\n4. End with the single best task to start now.\n\nKeep the plan concise and adjust it when I report progress.",
-      "category": "productivity",
-      "official": true,
-      "authorName": "Luci",
-      "repoPath": "skills/official/daily-focus-planner",
-      "updatedAt": "2026-07-31T05:02:32.334Z"
+      "updatedAt": "2026-07-30T22:03:36-07:00"
     },
     {
       "name": "plain-language-editor",
@@ -45,7 +45,7 @@
       "official": false,
       "authorName": "Jordan Lee",
       "repoPath": "skills/community/plain-language-editor",
-      "updatedAt": "2026-07-31T05:02:32.342Z"
+      "updatedAt": "2026-07-30T22:03:36-07:00"
     },
     {
       "name": "pull-request-reviewer",
@@ -56,7 +56,7 @@
       "official": false,
       "authorName": "Maya Chen",
       "repoPath": "skills/community/pull-request-reviewer",
-      "updatedAt": "2026-07-31T05:02:32.341Z"
+      "updatedAt": "2026-07-30T22:03:36-07:00"
     }
   ]
 }
