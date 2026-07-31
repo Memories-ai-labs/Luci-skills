@@ -80,16 +80,6 @@ Install this agent skill for me: https://github.com/OpenInterX-Products/luci-ski
    and notification connectors, then records everything in that repo's CLAUDE.md /
    AGENTS.md. `distill` reads that file on every run.
 
-## Why This Exists
-
-<!-- TODO: yours. Matt's format, repeated per problem:
-       ### #1: <the failure mode, in the user's words>
-       > quote
-       **The Problem**. …
-       **The Fix** is to use:
-       - [`/luci:xxx`](./skills/…/SKILL.md) — one line
-     He has 4. Two or three is plenty. -->
-
 ## Reference
 
 <!-- Descriptions below are the frontmatter `description` of each skill — edit them in
