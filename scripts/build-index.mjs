@@ -1,14 +1,22 @@
 #!/usr/bin/env node
 /**
- * Generate `index.json` from every `skills/**\/SKILL.md` in this repo.
+ * Generate two files from every `skills/**\/SKILL.md` in this repo:
  *
- * `index.json` is the machine-readable face of this repo: the Luci desktop app
- * pulls it (via its own `pnpm skills:sync`) and ships the result inside its
- * bundle, so browsing the in-app market needs no network. Regenerate and commit
- * it in the same commit as any skill change — CI fails otherwise.
+ *   • `.claude-plugin/plugin.json` — the plugin manifest Claude Code reads when
+ *     installing. Its `skills` array must list every skill directory, so it is
+ *     generated rather than hand-maintained (hand-maintained lists drift: the
+ *     repo this layout is modelled on ships a path whose directory is gone).
+ *     `version` is copied from package.json so there is one version to bump.
  *
- *   node scripts/build-index.mjs          # write index.json
- *   node scripts/build-index.mjs --check  # verify it is up to date (CI)
+ *   • `index.json` — the machine-readable catalog. The Luci desktop app pulls it
+ *     (via its own `pnpm skills:sync`) and ships the result inside its bundle,
+ *     so browsing the in-app market needs no network.
+ *
+ * Regenerate and commit both in the same commit as any skill change — CI fails
+ * otherwise.
+ *
+ *   node scripts/build-index.mjs          # write both files
+ *   node scripts/build-index.mjs --check  # verify they are up to date (CI)
  */
 import { readdir, readFile, writeFile, stat } from "node:fs/promises";
 import { execFile } from "node:child_process";
@@ -21,6 +29,8 @@ const run = promisify(execFile);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SKILLS_DIR = path.join(ROOT, "skills");
 const INDEX_PATH = path.join(ROOT, "index.json");
+const MANIFEST_PATH = path.join(ROOT, ".claude-plugin", "plugin.json");
+const PACKAGE_PATH = path.join(ROOT, "package.json");
 
 const REPO = "OpenInterX-Products/luci-skills";
 const BRANCH = "main";
@@ -174,18 +184,43 @@ const generatedAt = catalogChanged
 
 const next = `${JSON.stringify({ repo: REPO, branch: BRANCH, generatedAt, skills }, null, 2)}\n`;
 
+// --- .claude-plugin/plugin.json -------------------------------------------
+// The manifest Claude Code reads on install. `skills` lists every skill
+// directory; `version` mirrors package.json so a release bumps one number.
+const pkg = JSON.parse(await readFile(PACKAGE_PATH, "utf8"));
+const manifest = {
+  name: "luci-skills",
+  version: pkg.version,
+  description: pkg.description,
+  author: { name: "Luci", url: `https://github.com/${REPO}` },
+  homepage: `https://github.com/${REPO}`,
+  repository: `https://github.com/${REPO}`,
+  license: pkg.license,
+  keywords: pkg.keywords,
+  // Sorted by path so the file is stable regardless of catalog ordering.
+  skills: skills.map((skill) => `./${skill.repoPath}`).sort(),
+};
+const nextManifest = `${JSON.stringify(manifest, null, 2)}\n`;
+const previousManifest = await readFile(MANIFEST_PATH, "utf8").catch(() => null);
+
+const stale = [
+  ...(previous !== next ? ["index.json"] : []),
+  ...(previousManifest !== nextManifest ? [".claude-plugin/plugin.json"] : []),
+];
+
 if (process.argv.includes("--check")) {
-  if (previous !== next) {
+  if (stale.length > 0) {
     console.error(
-      "index.json is out of date — run `node scripts/build-index.mjs` and commit the result.",
+      `${stale.join(" and ")} out of date — run \`node scripts/build-index.mjs\` and commit the result.`,
     );
     process.exit(1);
   }
-  console.log(`index.json is up to date (${skills.length} skills).`);
+  console.log(`index.json and plugin.json are up to date (${skills.length} skills).`);
 } else {
   await writeFile(INDEX_PATH, next, "utf8");
+  await writeFile(MANIFEST_PATH, nextManifest, "utf8");
   const official = skills.filter((skill) => skill.official).length;
   console.log(
-    `wrote index.json — ${skills.length} skills (${official} official, ${skills.length - official} community)`,
+    `wrote index.json + .claude-plugin/plugin.json — ${skills.length} skills (${official} official, ${skills.length - official} community)`,
   );
 }

@@ -1,0 +1,26 @@
+{
+  "name": "luci-skills",
+  "version": "0.1.0",
+  "description": "Official and community-reviewed agent skills for Luci.",
+  "author": {
+    "name": "Luci",
+    "url": "https://github.com/OpenInterX-Products/luci-skills"
+  },
+  "homepage": "https://github.com/OpenInterX-Products/luci-skills",
+  "repository": "https://github.com/OpenInterX-Products/luci-skills",
+  "license": "MIT",
+  "keywords": [
+    "luci",
+    "agent-skills",
+    "claude-code",
+    "codex",
+    "cursor"
+  ],
+  "skills": [
+    "./skills/community/plain-language-editor",
+    "./skills/community/pull-request-reviewer",
+    "./skills/official/daily-focus-planner",
+    "./skills/official/life-memory-distiller",
+    "./skills/official/memory-distiller"
+  ]
+}
