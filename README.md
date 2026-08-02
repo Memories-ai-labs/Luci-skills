@@ -35,7 +35,13 @@ Or, from inside a session:
 <summary><strong>Codex, and other agents</strong></summary>
 
 ```bash
-npx skills add Memories-ai-labs/Luci-skills --skill distill
+npx skills add Memories-ai-labs/Luci-skills
+```
+
+Or install globally, for every project:
+
+```bash
+npx skills add Memories-ai-labs/Luci-skills -g
 ```
 
 Pick which coding agents to install it on. Files land in your repo as ordinary files
