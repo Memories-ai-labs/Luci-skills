@@ -58,6 +58,18 @@ Install this agent skill for me: https://github.com/Memories-ai-labs/Luci-skills
 
 </details>
 
+## How to use
+
+1. **Pick a folder** for your life file system — a fresh directory, or an existing
+   repo — and install the skills there (see above).
+2. **Run `/luci:setup-luci-skills` once** in that folder. It asks how you want your
+   reports written, then creates `reflections/daily/` and `entities/` and records
+   your answers in that folder's `CLAUDE.md` / `AGENTS.md`.
+3. **Run `/luci:distill`** whenever you want to catch up. It reads that config,
+   pulls each missing day from Luci, and writes one report per day.
+
+Step 2 is one-time; step 3 is the daily loop.
+
 ## Reference
 
 <!-- Descriptions below are the frontmatter `description` of each skill — edit them in
