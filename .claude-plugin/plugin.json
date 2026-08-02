@@ -3,10 +3,10 @@
   "description": "Official and community-reviewed agent skills for Luci.",
   "author": {
     "name": "Luci",
-    "url": "https://github.com/OpenInterX-Products/luci-skills"
+    "url": "https://github.com/Memories-ai-labs/Luci-skills"
   },
-  "homepage": "https://github.com/OpenInterX-Products/luci-skills",
-  "repository": "https://github.com/OpenInterX-Products/luci-skills",
+  "homepage": "https://github.com/Memories-ai-labs/Luci-skills",
+  "repository": "https://github.com/Memories-ai-labs/Luci-skills",
   "license": "MIT",
   "keywords": [
     "luci",

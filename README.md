@@ -17,14 +17,14 @@
 <summary><strong>Claude Code</strong></summary>
 
 ```bash
-claude plugin marketplace add OpenInterX-Products/luci-skills
+claude plugin marketplace add Memories-ai-labs/Luci-skills
 claude plugin install luci-skills
 ```
 
 Or, from inside a session:
 
 ```
-/plugin marketplace add OpenInterX-Products/luci-skills
+/plugin marketplace add Memories-ai-labs/Luci-skills
 /plugin install luci-skills
 /reload-plugins
 ```
@@ -35,7 +35,7 @@ Or, from inside a session:
 <summary><strong>Codex, and other agents</strong></summary>
 
 ```bash
-npx skills add OpenInterX-Products/luci-skills --skill distill
+npx skills add Memories-ai-labs/Luci-skills --skill distill
 ```
 
 Pick which coding agents to install it on. Files land in your repo as ordinary files
@@ -47,7 +47,7 @@ you own and can edit. Pull later changes with `npx skills update`.
 <summary><strong>Or ask your agent</strong></summary>
 
 ```
-Install this agent skill for me: https://github.com/OpenInterX-Products/luci-skills
+Install this agent skill for me: https://github.com/Memories-ai-labs/Luci-skills
 ```
 
 </details>

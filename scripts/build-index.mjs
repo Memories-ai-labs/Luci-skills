@@ -33,7 +33,7 @@ const INDEX_PATH = path.join(ROOT, "index.json");
 const MANIFEST_PATH = path.join(ROOT, ".claude-plugin", "plugin.json");
 const PACKAGE_PATH = path.join(ROOT, "package.json");
 
-const REPO = "OpenInterX-Products/luci-skills";
+const REPO = "Memories-ai-labs/Luci-skills";
 const BRANCH = "main";
 /** Marketplace `name` in .claude-plugin/marketplace.json. */
 const MARKETPLACE = "luci";

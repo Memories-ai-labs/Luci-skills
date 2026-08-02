@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "description": "Official and community-reviewed agent skills for Luci.",
-  "homepage": "https://github.com/OpenInterX-Products/luci-skills",
-  "repository": "https://github.com/OpenInterX-Products/luci-skills",
+  "homepage": "https://github.com/Memories-ai-labs/Luci-skills",
+  "repository": "https://github.com/Memories-ai-labs/Luci-skills",
   "license": "MIT",
   "keywords": ["luci", "agent-skills", "claude-code", "codex", "cursor"],
   "scripts": {

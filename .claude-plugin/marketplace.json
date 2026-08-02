@@ -2,7 +2,7 @@
   "name": "luci",
   "owner": {
     "name": "Luci",
-    "url": "https://github.com/OpenInterX-Products/luci-skills"
+    "url": "https://github.com/Memories-ai-labs/Luci-skills"
   },
   "description": "Official Luci agent skills — reviewed, plain SKILL.md, no lock-in.",
   "plugins": [
