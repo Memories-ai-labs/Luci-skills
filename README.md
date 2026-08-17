@@ -60,15 +60,18 @@ Install this agent skill for me: https://github.com/Memories-ai-labs/Luci-skills
 
 ## How to use
 
-1. **Pick a folder** for your life file system — a fresh directory, or an existing
-   repo — and install the skills there (see above).
-2. **Run `/luci:setup-luci-skills` once** in that folder. It asks how you want your
-   reports written, then creates `reflections/daily/` and `entities/` and records
-   your answers in that folder's `CLAUDE.md` / `AGENTS.md`.
-3. **Run `/luci:distill`** whenever you want to catch up. It reads that config,
-   pulls each missing day from Luci, and writes one report per day.
-
-Step 2 is one-time; step 3 is the daily loop.
+1. Install the skills into your coding agent (see above).
+2. **Ask what you previously saw, read, did, or heard** — `/luci:luci` searches
+   live history through the Luci CLI. If the Luci app is not running, it reads
+   matching notes under `~/.Life/` instead. If both are empty, it asks you to
+   open the Luci app, leave it running for a while, then try again.
+3. **Run `/luci:distill-my-life`** whenever you want to catch up. On the first run
+   it creates `~/.Life/` (`reflections/daily/` and `entities/`) if they are
+   missing, then pulls each missing day from Luci and writes one report per day
+   under `~/.Life/reflections/daily/`. New people, organizations, projects, and
+   tools are written under `~/.Life/entities/` without asking. If
+   `~/.Life/CLAUDE.md` or `~/.Life/AGENTS.md` already has writing rules, those
+   are used.
 
 ## Reference
 
@@ -77,8 +80,8 @@ Step 2 is one-time; step 3 is the daily loop.
 
 | Skill | Description |
 | --- | --- |
-| [`/luci:distill`](./skills/official/distill/SKILL.md) | Distill each day's raw activity into an objective daily report under `reflections/daily/`, and surface new entities for confirmation. |
-| [`/luci:setup-luci-skills`](./skills/official/setup-luci-skills/SKILL.md) | Configure the life file system. Run once before first use of the other luci skills. |
+| [`/luci:luci`](./skills/official/luci/SKILL.md) | Search personal activity history with the Luci CLI. Falls back to `~/.Life` notes when the Luci app is not running. |
+| [`/luci:distill-my-life`](./skills/official/distill-my-life/SKILL.md) | Distill each day's raw activity into an objective daily report under `~/.Life/reflections/daily/`. Creates `~/.Life` if it is missing, and writes new entities under `~/.Life/entities/`. |
 
 ## License
 

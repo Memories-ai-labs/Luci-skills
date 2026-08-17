@@ -16,7 +16,7 @@
     "cursor"
   ],
   "skills": [
-    "./skills/official/distill",
-    "./skills/official/setup-luci-skills"
+    "./skills/official/distill-my-life",
+    "./skills/official/luci"
   ]
 }
