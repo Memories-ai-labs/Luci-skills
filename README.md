@@ -72,6 +72,14 @@ Install this agent skill for me: https://github.com/Memories-ai-labs/Luci-skills
    tools are written under `~/.Life/entities/` without asking. If
    `~/.Life/CLAUDE.md` or `~/.Life/AGENTS.md` already has writing rules, those
    are used.
+4. **Run `/luci:summarize-meeting`** after a call — or paste the prompt Luci
+   shows when a meeting ends. It pulls that window's screen activity and
+   transcript, writes one file under `~/.Life/reflections/meetings/`, and
+   updates the entity files for whoever was there.
+
+Write `~/.Life/RULES.md` by hand to say who is who and what to leave out.
+`distill-my-life` and `summarize-meeting` read it before every run and never
+write to it.
 
 ## Reference
 
@@ -80,8 +88,9 @@ Install this agent skill for me: https://github.com/Memories-ai-labs/Luci-skills
 
 | Skill | Description |
 | --- | --- |
-| [`/luci:luci`](./skills/official/luci/SKILL.md) | Search personal activity history with the Luci CLI. Falls back to `~/.Life` notes when the Luci app is not running. |
+| [`/luci:luci`](./skills/official/luci/SKILL.md) | Search and summarize personal activity history with the Luci CLI. Falls back to `~/.Life` notes when the Luci app is not running. |
 | [`/luci:distill-my-life`](./skills/official/distill-my-life/SKILL.md) | Distill each day's raw activity into an objective daily report under `~/.Life/reflections/daily/`. Creates `~/.Life` if it is missing, and writes new entities under `~/.Life/entities/`. |
+| [`/luci:summarize-meeting`](./skills/official/summarize-meeting/SKILL.md) | Write one meeting into `~/.Life/reflections/meetings/`, with the people, organizations, and projects it touched. |
 
 ## License
 

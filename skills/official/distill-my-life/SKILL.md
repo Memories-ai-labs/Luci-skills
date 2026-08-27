@@ -7,6 +7,10 @@ description: Distill each day's raw activity into a daily report. Ensures ~/.Lif
 
 # Distill — daily distillation
 
+Luci's Life page reads these files as data. YAML and `##` headings are
+the schema. Prose under a heading is shown as written. Do not invent
+fields the schema does not name.
+
 ## Step 0: ensure the life file system
 
 The life file system is always under the user's home directory, never
@@ -36,46 +40,104 @@ Then look for a file-system index inside `~/.Life` only:
 - If `~/.Life/CLAUDE.md` exists, use it.
 - Else if `~/.Life/AGENTS.md` exists, use it.
 - If neither exists, continue with the defaults in this skill (English,
-  hourly blocks, no external send). Do not create an index file.
+  hourly blocks, no external send). Do not create an index file — Luci
+  writes both on first launch.
 
 If the index exists, follow its **writing rules**, **daily-report format**,
 and **external connector config**. Missing keys fall back to the defaults
 above.
 
+## Step 0.5: read the user's rules
+
+Read `~/.Life/RULES.md` if it exists. It is written by hand by the user:
+who is who, who and what to leave out, how reports should read.
+
+- Follow it for this whole run. Where it disagrees with the index or with this
+  skill, **the rules file wins**.
+- If it says to leave a person, app, site, or subject out, that thing does not
+  appear anywhere — not in a daily file, not in an entity file, not in the
+  final output.
+- **Never write to `RULES.md`.** Do not create it, tidy it, reformat it,
+  or append what you learned to it. It is the user's document; distill only
+  reads it.
+- Missing file, or a file you cannot read: continue with the defaults. Do not
+  create one.
+
 ## Step 1: decide which days to process
 
+- Before writing anything, check whether `~/.Life/reflections/daily/`
+  contains any file matching `YYYY-MM-DD.md`. If it contains none, remember
+  this — it means today's run may be the first distillation ever on this
+  machine, which matters for Step 4.
 - Get today's date via Bash (never guess from memory).
-- Range: **from the last distillation to yesterday**. "Last distillation" is
-  the date in the newest filename under `~/.Life/reflections/daily/`; if the
-  directory is empty, start from the earliest day that has data.
+- Range: **from the last complete distillation to yesterday**. A daily file
+  is complete only when its YAML frontmatter has both `date` and
+  `observation`. A file without those keys is missing — write it again.
 - Only complete days — yesterday and earlier. **Never process today.**
-- Only fill in dates still missing a report under `~/.Life/reflections/daily/`;
-  skip existing ones.
+- Skip a date only when a complete file already exists.
 - If the backlog exceeds 7 days, process only the most recent 7 and list
   the skipped dates explicitly at the end.
-- A day with no data at all gets a minimal "no data" report (one line).
-  **Never fabricate.**
+- A day with no data at all still gets a complete file: YAML plus one
+  `observation`, and no `##` capture blocks. **Never fabricate.**
 
-## Step 2: summarize each day
+## Step 2: write each daily file
 
-For each day, pull that day's activity via Luci and write
-`~/.Life/reflections/daily/YYYY-MM-DD.md`:
+Pull that day's activity via Luci and write
+`~/.Life/reflections/daily/YYYY-MM-DD.md`.
 
-- **Divide the day into hourly blocks.** Align screen activity and real-time
-  transcription (meeting/voice transcripts) by timestamp before summarizing —
-  the two sources must corroborate each other, not be written up separately.
-- Purely objective description: what was done, what tools were used, who was
-  interacted with. No judgment, no extrapolation, no advice.
-- If the source is uncertain, leave it out.
-- **Mandatory caveat**: screen-memory only samples while the **screen is
-  on**; daytime gaps are usually offline meetings, commuting, or sleep, so
-  **screen time is an underestimate**. State this in every report, and never
-  read a gap as "not working."
-- Close with **one honest sentence**: an honest observation grounded in real
-  data (sleep schedule, late nights, context-switch density). Tell the
-  truth — no sugarcoating, no platitudes.
+### YAML (required)
 
-## Step 3: write new entities
+Every daily file starts with this frontmatter. `observation` is one
+sentence. Slugs match entity filenames without `.md`. Use `[]` when a
+list is empty. Always fold `observation` with `>` so colons in the
+sentence cannot break the file:
+
+```yaml
+---
+date: 2026-08-24
+samples: 187
+audio_segments: 148
+first: "01:21"
+last: "23:06"
+observation: >
+  Only 37 minutes of captured screen time before the 21-hour gap, and all
+  of it went into recording and re-recording the same talk.
+projects:
+  - microsoft-luci-electron
+people:
+  - matt-pocock
+orgs: []
+---
+```
+
+`samples`, `audio_segments`, `first`, `last` come from Luci counts for
+that day. If a source is missing, omit that key.
+
+Do not put a second copy of `observation` below the body. The Life page reads
+the YAML field.
+
+### Body
+
+After the frontmatter:
+
+1. `# YYYY-MM-DD (Weekday)` using the English weekday.
+2. The screen-memory caveat in one short paragraph.
+3. Hourly blocks. Align screen activity and live transcription by
+   timestamp. Objective only. If the source is uncertain, leave it out.
+
+Heading grammar is locked. Use an en dash between times. Use an em dash
+before a title or a gap label. No other `##` shape:
+
+```
+## HH:MM–HH:MM
+## HH:MM–HH:MM — title
+## HH:MM–HH:MM — no samples ({duration})
+```
+
+A gap is a heading only, no body. Never invent hours to fill a gap.
+Never use a single timestamp without an end time.
+
+## Step 3: write entities
 
 While summarizing, watch for **people, organizations, projects, and
 software tools**.
@@ -88,15 +150,77 @@ day's evidence — do not ask:
 - projects → `~/.Life/entities/projects/<slug>.md`
 - software tools → `~/.Life/entities/tools/<slug>.md`
 
-New file: a `# Name` heading and one `- YYYY-MM-DD: context` bullet.
-Existing file: append a bullet. Never invent. Never rewrite.
+Slug: lowercase ASCII, digits, hyphens. Reuse the existing filename when
+the name already has a file (match YAML `name` or the `#` heading).
+
+New file:
+
+```markdown
+---
+name: Microsoft-Luci-Electron
+kind: project
+---
+
+# Microsoft-Luci-Electron
+
+- 2026-08-24: eight threads still in flight, including Insights unlock
+```
+
+`kind` is `person`, `org`, `project`, or `tool`.
+
+Existing file:
+
+- If YAML is missing, insert `name` / `kind` frontmatter above the
+  current body. Do not delete the body.
+- If today's date is not already a `- YYYY-MM-DD:` bullet, append one.
+- Never edit existing bullets. Never rewrite prose into a summary.
+
+## Step 4: first-time notification
+
+Only when `~/.Life/reflections/daily/` had **no** `YYYY-MM-DD.md` files
+before this run (Step 1) **and** Step 2 wrote at least one daily file, add
+one congratulations row to Luci's local notification center so it appears
+next time the app opens. Do this at most once ever — skip it entirely if an
+entry with id `first-distill` already exists.
+
+1. Find Luci's config file:
+   - macOS: `~/.luciMicrosoft/luci-config.json`
+   - Windows: `%USERPROFILE%\.luci\luci-config.json`
+   - Linux: `~/.luci/luci-config.json`
+2. If the file does not exist, skip this step — Luci has never run here.
+3. Read the whole file as JSON. If it fails to parse, skip this step; never
+   overwrite a config file you cannot read.
+4. It has a `notifications` key holding an array (treat it as `[]` if
+   absent). If any entry in that array already has `"id": "first-distill"`,
+   skip — already sent. Otherwise prepend this object to the front of the
+   array, touching no other key in the file:
+
+   ```json
+   {
+     "id": "first-distill",
+     "kind": "distill",
+     "title": "You just distilled your first day!",
+     "body": "Your first daily report is in ~/.Life. Keep it up and Luci will build a real picture of your work over time.",
+     "at": <current time as epoch milliseconds>,
+     "read": false,
+     "to": "/v2/life"
+   }
+   ```
+5. Write the whole JSON object back to the same path, preserving every other
+   key exactly as read.
+
+This only makes the row appear the next time the app is opened or restarted
+— Luci does not watch this file live.
 
 ## Final output
 
 - Which folders were created in Step 0, if any.
-- Which days got reports (list the file paths).
+- Which days got reports (list the file paths), including days rewritten
+  because YAML was missing.
 - Which dates were skipped and why.
 - Which entity files were written or appended (if any).
+- Whether `~/.Life/RULES.md` was found and applied.
+- Whether the Step 4 first-time notification was sent.
 - If an external connector is configured in `~/.Life/CLAUDE.md` or
   `~/.Life/AGENTS.md`, send one summary message through it (exactly one
   per run); if not configured, send nothing.
