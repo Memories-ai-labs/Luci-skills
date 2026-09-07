@@ -5,6 +5,8 @@ category: memory
 description: Distill each day's raw activity into a daily report. Ensures ~/.Life exists, pulls the day's activity via Luci, writes an objective report under ~/.Life/reflections/daily/, and writes new entities under ~/.Life/entities/. Use when the user says "distill", "distill my life", "catch up on daily reports", "summarize the last few days", or first needs the life folders created.
 ---
 
+<!-- luci-skill-version: 1.2.0 -->
+
 # Distill — daily distillation
 
 Luci's Life page reads these files as data. YAML and `##` headings are
@@ -79,11 +81,56 @@ who is who, who and what to leave out, how reports should read.
   the skipped dates explicitly at the end.
 - A day with no data at all still gets a complete file: YAML plus one
   `observation`, and no `##` capture blocks. **Never fabricate.**
+- "No data" means every Luci command for that day exited 0 and returned
+  nothing. A command that failed is not a no-data day. See Step 2.
 
 ## Step 2: write each daily file
 
-Pull that day's activity via Luci and write
-`~/.Life/reflections/daily/YYYY-MM-DD.md`.
+Pull that day's activity via the Luci CLI, then write
+`~/.Life/reflections/daily/YYYY-MM-DD.md`. Process days oldest first.
+
+### Pulling a day from Luci
+
+Resolve `<CLI>` exactly as the `luci` skill describes (discovery file,
+then PATH). Do not run `status` first: `status` never starts Luci, while
+real commands start it in the background and wait for it. The first
+`usage` call below is the preflight.
+
+Ranges are epoch milliseconds in local time, `<fromMs>:<toMs>`. Get the
+day's midnight from the shell, never from memory:
+
+- macOS: `date -j -f '%Y-%m-%d %H:%M:%S' 'YYYY-MM-DD 00:00:00' +%s` then `* 1000`
+- Linux: `date -d 'YYYY-MM-DD 00:00:00' +%s` then `* 1000`
+- Windows: `[DateTimeOffset]::new([datetime]'YYYY-MM-DD').ToUnixTimeMilliseconds()`
+
+`toMs` is the next midnight minus 1.
+
+1. Screen: `<CLI> usage --tr <fromMs>:<toMs> --limit 500 --json`. The
+   limit is a hard cap and the CLI has no paging, so if exactly 500
+   entries come back, rerun per hour (24 ranges) and concatenate.
+2. Audio: `<CLI> transcript "<keyword>" --tr <fromMs>:<toMs> --limit 500 --json`
+   for the two or three subjects the screen entries show (meeting names,
+   project names). There is no "all audio" command.
+3. Details: `frame <ID>` only for entries whose text is too thin to place.
+
+Read the exit code of every command:
+
+- `0` with entries: use them.
+- `0` with no entries: a real gap. Write the day as no-data if every
+  command for that day was empty.
+- `3`: your command was malformed. Fix it from `<CLI> --help` and rerun.
+  This is never the user's problem.
+- `2` with "didn't respond in time" on stderr: rerun that one range once
+  with a smaller `--limit` or per-hour ranges. If it fails again, stop.
+- `2` with any other message, or `1`: stop.
+
+Stop means: do not write a daily file for this day, do not touch later
+days, do not write entities from partial results, and do not fall back to
+guessing. Files already written for earlier days stay. Report the day it
+happened on and the CLI's stderr line verbatim (it is written for users
+and contains no paths). Then wait for the user to fix Luci and rerun.
+These failures are not expected when Luci is installed; do not loop on
+retries or try other tools.
 
 ### YAML (required)
 
@@ -110,8 +157,12 @@ orgs: []
 ---
 ```
 
-`samples`, `audio_segments`, `first`, `last` come from Luci counts for
-that day. If a source is missing, omit that key.
+`samples` is the number of screen entries `usage` returned for the day.
+`audio_segments` is the number of distinct transcript segments you saw;
+omit it when you ran no transcript query. `first` and `last` are the
+local times of the earliest and latest screen entry. Omit a key only
+when its source was not queried, never because a command failed (a
+failed command means Step 2 stopped and this file is not written).
 
 Do not put a second copy of `observation` below the body. The Life page reads
 the YAML field.
@@ -218,6 +269,8 @@ This only makes the row appear the next time the app is opened or restarted
 - Which days got reports (list the file paths), including days rewritten
   because YAML was missing.
 - Which dates were skipped and why.
+- If a Luci command failed: the date it failed on, the CLI's message
+  verbatim, and that no later day was processed.
 - Which entity files were written or appended (if any).
 - Whether `~/.Life/RULES.md` was found and applied.
 - Whether the Step 4 first-time notification was sent.

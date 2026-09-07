@@ -5,6 +5,8 @@ category: memory
 description: Write a meeting into ~/.Life/reflections/meetings/. Use when the user says summarize this meeting, or pastes Luci's meeting-end prompt.
 ---
 
+<!-- luci-skill-version: 1.0.0 -->
+
 Summarize this meeting with Luci.
 
 The user will name when and where it ran (app, start, end).
@@ -66,4 +68,4 @@ Do not create a person file for the user (Zoom labels like (你), (You), Me) or 
 
 Do not edit reflections/daily/. The day's capture blocks stay as distill wrote them.
 
-Ground every claim in Luci results. If live history is missing, say so. If a source is uncertain, leave it out. Never fabricate.
+Ground every claim in Luci results. If a Luci command exits non-zero, follow the `luci` skill's error rule: stop, write no file, and show the user the CLI's message verbatim. If a source is uncertain, leave it out. Never fabricate.
