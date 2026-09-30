@@ -5,7 +5,7 @@ category: memory
 description: Distill each day's raw activity into a daily report. Ensures ~/.Life exists, pulls the day's activity via Luci, writes an objective report under ~/.Life/reflections/daily/, and writes new entities under ~/.Life/entities/. Use when the user says "distill", "distill my life", "catch up on daily reports", "summarize the last few days", or first needs the life folders created.
 ---
 
-<!-- luci-skill-version: 1.2.0 -->
+<!-- luci-skill-version: 1.3.0 -->
 
 # Distill — daily distillation
 
@@ -263,6 +263,25 @@ entry with id `first-distill` already exists.
 This only makes the row appear the next time the app is opened or restarted
 — Luci does not watch this file live.
 
+## Step 5: the profile
+
+After every daily file and entity is written, decide whether the user's
+profile, `~/.Life/profile.md`, is due:
+
+- If the prompt that started this run has a `## Then write the profile`
+  section, or says the profile is not due, Luci has already decided. Do what
+  it says and skip the rest of this step.
+- Otherwise it is due when either:
+  - `~/.Life/profile.md` does not exist and `~/.Life/reflections/daily/`
+    holds at least 3 daily files, or
+  - it exists and its frontmatter `updated:` date is more than 7 days before
+    today.
+
+When it is due, use the `luci-profile` skill to write it: a first profile
+when the file did not exist, the weekly rewrite otherwise. If you don't have
+that skill, install it from https://github.com/Memories-ai-labs/Luci-skills
+first. When it is not due, write nothing.
+
 ## Final output
 
 - Which folders were created in Step 0, if any.
@@ -274,6 +293,7 @@ This only makes the row appear the next time the app is opened or restarted
 - Which entity files were written or appended (if any).
 - Whether `~/.Life/RULES.md` was found and applied.
 - Whether the Step 4 first-time notification was sent.
+- Whether Step 5 wrote the profile (first or weekly), or why it was not due.
 - If an external connector is configured in `~/.Life/CLAUDE.md` or
   `~/.Life/AGENTS.md`, send one summary message through it (exactly one
   per run); if not configured, send nothing.

@@ -71,16 +71,17 @@ Install this agent skill for me: https://github.com/Memories-ai-labs/Luci-skills
    under `~/.Life/reflections/daily/`. New people, organizations, projects, and
    tools are written under `~/.Life/entities/` without asking. If
    `~/.Life/CLAUDE.md` or `~/.Life/AGENTS.md` already has writing rules, those
-   are used.
+   are used. Once there are 3 days of reports, it also writes your profile with
+   `luci-profile`, and rewrites it when it is more than a week old.
 4. **Run `/luci:summarize-meeting`** after a call — or paste the prompt Luci
    shows when a meeting ends. It pulls that window's screen activity and
    transcript, writes one file under `~/.Life/reflections/meetings/`, and
    updates the entity files for whoever was there.
-5. **Run `/luci:luci-profile`** once you have a few days of reports. It reads
+5. **Run `/luci:luci-profile`** to write your profile yourself (distill does it for you). It reads
    them, plus your meetings and entities, and writes `~/.Life/profile.md`: what
    you are working on, how you work, who you work with, and a couple of
    questions it could not settle. The Luci app shows it as your profile and
-   type card. Run it again each week to refresh it.
+   type card.
 
 Write `~/.Life/RULES.md` by hand to say who is who and what to leave out.
 `distill-my-life`, `summarize-meeting` and `luci-profile` read it before every

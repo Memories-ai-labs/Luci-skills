@@ -31,8 +31,11 @@ already answered, use them as given. Asked directly with no distill prompt,
 write a first profile unless one already exists, in which case do a weekly
 rewrite.
 
-Overwrite the file if it exists. Luci has already kept a copy of the previous
-version.
+Before you overwrite an existing profile.md, keep a copy: if
+`~/.Life/profile/history/<its updated date>.md` does not exist, copy the
+current file there (create the folders if needed). The Life page reads that
+copy to show what changed. When Luci started the run it has usually made the
+copy already; then leave it alone. Then overwrite profile.md.
 
 ## Rules
 
