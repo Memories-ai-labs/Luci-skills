@@ -77,11 +77,11 @@ Install this agent skill for me: https://github.com/Memories-ai-labs/Luci-skills
    shows when a meeting ends. It pulls that window's screen activity and
    transcript, writes one file under `~/.Life/reflections/meetings/`, and
    updates the entity files for whoever was there.
-5. **Run `/luci:luci-profile`** to write your profile yourself (distill does it for you). It reads
-   them, plus your meetings and entities, and writes `~/.Life/profile.md`: what
-   you are working on, how you work, who you work with, and a couple of
-   questions it could not settle. The Luci app shows it as your profile and
-   type card.
+5. **Run `/luci:luci-profile`** to redo your profile now, without waiting for
+   distill. It reads your daily reports, meetings and entities and writes
+   `~/.Life/profile.md`: what you are working on, how you work, who you work
+   with, and a couple of questions it could not settle. The Luci app shows it
+   as your profile and type card.
 
 Write `~/.Life/RULES.md` by hand to say who is who and what to leave out.
 `distill-my-life`, `summarize-meeting` and `luci-profile` read it before every

@@ -18,6 +18,7 @@
   "skills": [
     "./skills/official/distill-my-life",
     "./skills/official/luci",
+    "./skills/official/luci-profile",
     "./skills/official/summarize-meeting"
   ]
 }
