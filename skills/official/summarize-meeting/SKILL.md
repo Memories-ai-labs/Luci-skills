@@ -17,6 +17,10 @@ write-up; they win over anything below. Never write to that file.
 
 Use the luci skill to pull screen activity and transcripts from that window, then write one markdown file on disk — do not stop at a chat reply.
 
+Pull the transcript with `transcript --tr <RANGE>` and no keywords: that returns
+every segment in the window in the order it was spoken. Keyword searches are for
+looking something up afterwards, not for reading the meeting.
+
 Path: ~/.Life/reflections/meetings/YYYY-MM-DD-slug.md
 (Windows: %USERPROFILE%\.Life\reflections\meetings\YYYY-MM-DD-slug.md)
 Slug: lowercase ASCII, digits, hyphens. Reuse the file if this window already has one.
@@ -39,7 +43,16 @@ projects:
 ---
 ```
 
-Use [] for an empty list. Body after the frontmatter is free markdown (who was there, what was discussed, decisions, action items, open questions — include a section only when you have something to put in it).
+Use [] for an empty list. Body after the frontmatter is free markdown (who was there, what was discussed, decisions, action items, open questions — include a section only when you have something to put in it). `## Action items` is the exception: write it every time.
+
+```
+## Action items
+- [ ] <what, one line> @<owner-slug or me> due:<YYYY-MM-DD or none> ^[HH:MM]
+```
+
+One item per line. `@me` is the user; any other owner is the slug of an entities/people/<slug>.md file. Use `- [x]` for anything already finished during the call. `^[HH:MM]` is the local time the item came up, read off the transcript. If nothing was assigned, write the section with the single line `- none`.
+
+End every bullet under `## Decisions` and `## Open questions` with the same `^[HH:MM]` anchor.
 
 Create ~/.Life and the meetings / entities folders if they are missing. Do not delete anything already there.
 

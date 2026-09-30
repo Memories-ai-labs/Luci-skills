@@ -76,10 +76,15 @@ Install this agent skill for me: https://github.com/Memories-ai-labs/Luci-skills
    shows when a meeting ends. It pulls that window's screen activity and
    transcript, writes one file under `~/.Life/reflections/meetings/`, and
    updates the entity files for whoever was there.
+5. **Run `/luci:luci-profile`** once you have a few days of reports. It reads
+   them, plus your meetings and entities, and writes `~/.Life/profile.md`: what
+   you are working on, how you work, who you work with, and a couple of
+   questions it could not settle. The Luci app shows it as your profile and
+   type card. Run it again each week to refresh it.
 
 Write `~/.Life/RULES.md` by hand to say who is who and what to leave out.
-`distill-my-life` and `summarize-meeting` read it before every run and never
-write to it.
+`distill-my-life`, `summarize-meeting` and `luci-profile` read it before every
+run and never write to it.
 
 ## Reference
 
@@ -91,6 +96,7 @@ write to it.
 | [`/luci:luci`](./skills/official/luci/SKILL.md) | Search and summarize personal activity history with the Luci CLI. Falls back to `~/.Life` notes when the Luci app is not running. |
 | [`/luci:distill-my-life`](./skills/official/distill-my-life/SKILL.md) | Distill each day's raw activity into an objective daily report under `~/.Life/reflections/daily/`. Creates `~/.Life` if it is missing, and writes new entities under `~/.Life/entities/`. |
 | [`/luci:summarize-meeting`](./skills/official/summarize-meeting/SKILL.md) | Write one meeting into `~/.Life/reflections/meetings/`, with the people, organizations, and projects it touched. |
+| [`/luci:luci-profile`](./skills/official/luci-profile/SKILL.md) | Write or rewrite `~/.Life/profile.md`, the user's Luci profile, from their daily reports, meeting write-ups and entities. |
 
 ## License
 

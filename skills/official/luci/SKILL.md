@@ -75,6 +75,7 @@ files to work around them.
 <CLI> search "<exact words>" --tr <RANGE>
 <CLI> search "<description>" --semantic --tr <RANGE>
 <CLI> transcript "<keywords>" --tr <RANGE>
+<CLI> transcript --tr <RANGE>
 <CLI> filter --app "<app>" --tr <RANGE>
 <CLI> frame <ID>
 <CLI> image <ID> -o <output.jpg>
@@ -82,7 +83,9 @@ files to work around them.
 
 - `usage`: reconstruct activity over time.
 - `search`: find exact visible text; add `--semantic` for fuzzy recall.
-- `transcript`: find spoken content.
+- `transcript`: find spoken content by keyword; drop the keywords to read
+  everything said in the range, in the order it was spoken (use that for a
+  whole meeting).
 - `filter`: narrow results to one app; copy the app name from an earlier result.
 - `frame`: inspect one result in full context.
 - `image`: inspect layout when text is insufficient.
